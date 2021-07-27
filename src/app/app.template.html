@@ -1,5 +1,9 @@
 <div>
-  <app-input (newTodoItem)="addItem($event)"></app-input>
+  <app-input
+    (newTodoItem)="addItem()"
+    [todoItem]="todoItem"
+    (changeTodoItem)="todoItem = $event"
+  ></app-input>
   <ul>
     <li *ngFor="let item of todoList">{{item}}</li>
   </ul>
