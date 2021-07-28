@@ -4,7 +4,7 @@ import { StorageService } from './storage.service'
 @Component({
   selector: 'app-root',
   templateUrl: './app.template.html',
-  styles: []
+  styleUrls: ['./app.style.scss']
 })
 export class AppComponent implements OnInit {
   todoList: string[] = []
@@ -19,6 +19,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.todoList = this.storageSerivce.getItems()
+    this.storageSerivce.getItems().subscribe((next) => {
+      this.todoList = next
+    })
   }
 }

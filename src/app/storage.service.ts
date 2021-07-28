@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
+import { from, Observable, of } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-
-  constructor() { }
+  constructor() {}
 
   saveItems(items: string[]): void {
     const storageItems = window.localStorage.getItem('items')
@@ -18,10 +18,10 @@ export class StorageService {
     }
   }
 
-  getItems(): string[] {
+  getItems(): Observable<string[]> {
     const storageItems = window.localStorage.getItem('items')
 
-    if (!storageItems) return []
-    else return JSON.parse(storageItems) as string[]
+    if (!storageItems) return from([])
+    else return of(JSON.parse(storageItems))
   }
 }
