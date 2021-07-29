@@ -7,8 +7,10 @@ import { AppComponent } from './app.component'
 import { InputComponent } from './input/input.component'
 import { TransitionButtonComponent } from './transition-button/transition-button.component'
 import { ActiveTextPipe } from './active-text.pipe'
-import { TransitionTextComponent } from './transition-text/transition-text.component';
+import { TransitionTextComponent } from './transition-text/transition-text.component'
 import { TimerComponent } from './timer/timer.component'
+
+import { AppRoutingModule } from './app-routing.module'
 
 @NgModule({
   declarations: [
@@ -19,7 +21,13 @@ import { TimerComponent } from './timer/timer.component'
     TransitionTextComponent,
     TimerComponent
   ],
-  imports: [BrowserModule, FormsModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    AppRoutingModule
+  ],
+  exports: [TimerComponent],
   providers: [],
   bootstrap: [AppComponent]
 })

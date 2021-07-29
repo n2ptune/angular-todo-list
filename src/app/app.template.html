@@ -1,12 +1,12 @@
-<div>
-  <app-input
-    (newTodoItem)="addItem()"
-    [todoItem]="todoItem"
-    (changeTodoItem)="todoItem = $event"
-  ></app-input>
+<nav>
   <ul>
-    <li *ngFor="let item of todoList">{{item}}</li>
+    <li>
+      <a routerLink="/">main</a>
+    </li>
+    <li>
+      <a routerLink="/sub">sub</a>
+    </li>
   </ul>
-  <app-transition-button></app-transition-button>
-  <app-timer></app-timer>
-</div>
+</nav>
+
+<router-outlet></router-outlet>
