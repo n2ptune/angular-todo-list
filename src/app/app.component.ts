@@ -1,26 +1,10 @@
-import { Component, OnInit } from '@angular/core'
-import { StorageService } from './storage.service'
+import { Component } from '@angular/core'
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.template.html',
-  styleUrls: ['./app.style.scss']
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  todoList: string[] = []
-  todoItem: string = ''
-
-  constructor(private storageSerivce: StorageService) {}
-
-  addItem() {
-    this.todoList.push(this.todoItem)
-    this.todoItem = ''
-    this.storageSerivce.saveItems(this.todoList)
-  }
-
-  ngOnInit() {
-    this.storageSerivce.getItems().subscribe((next) => {
-      this.todoList = next
-    })
-  }
+export class AppComponent {
+  title = 'angular-todo-list'
 }

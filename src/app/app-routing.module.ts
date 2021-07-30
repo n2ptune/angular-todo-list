@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 
-import { MainViewsComponent } from './views/main'
-
-const routes: Routes = [{ path: '', component: MainViewsComponent }]
+const routes: Routes = []
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
