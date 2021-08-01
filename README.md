@@ -189,3 +189,42 @@ Lazy Chunk Files                  | Names         |      Size
 ```
 
 Lazy Chunk Files 탭에있는 파일들이 모듈별로 라우팅을 분할한 파일들인데, 해당 파일들은 지정된 경로에 접근했을 때 비로소 불러와지기 때문에 메인 페이지에 접근했을 때 한꺼번에 가져와지지 않는다. 그러므로 이렇게 코드 분할을 할 수 있다. 매우 쉽다. 모듈을 나누고 어떤 설정을 통해 해줘야되는 것이 아니라 CLI을 통해 이러한 이점을 누릴 수 있다.
+
+### 파라미터 사용
+
+`/todo` 경로는 모든 `TodoItem`을 모아 리스트 형태로 보여주는 곳이라고 한다면 `/todo/1`은 그 리스트 중 아이디 값이 1인 아이템의 디테일한 정보를 보여주는 경로라고 할 수 있다. Angular에서 이런 기능은 의존성 주입을 통해 가져올 수 있다.
+
+```typescript
+const routes: Routes = [
+  { path: '', component: TodoListComponent },
+  { path: ':id', component: TodoDetailComponent }
+]
+```
+
+먼저 라우트 경로에 콜론과 파라미터 이름을 통해 경로에 어떤 파라미터를 지정할 건지에 대한 정의가 필요하다.
+
+```typescript
+import { ActivatedRoute, Router } from '@angular/router'
+```
+
+`@angular/router` 패키지에서 위 클래스를 가져온다. 그 후 컴포넌트 생성자에 매개변수로 등록해놓으면 알아서 컴포넌트에 의존성을 주입해준다. 그리고 컴포넌트 데이터에 가져온 파라미터 정보를 매핑시킬 수 있다.
+
+```typescript
+export class TodoDetailComponent implements OnInit {
+  id: number = 0
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.paramMap.subscribe((param) => {
+      this.id = Number(param.get('id'))
+    })
+  }
+
+  ngOnInit(): void {
+    console.log(this.id) // /todo/1 -> 1
+  }
+}
+```
+
+`route`와 `router`는 컴포넌트에 지역적으로 선언하지 않아도 Angular에서 알아서 처리해준다. 따라서 `this.route`같은 형태로 사용해도 전혀 위화감이 없다.
+
+사용자가 `/todo/3` 이라는 경로로 들어오면 컴포넌트의 `id` 필드는 `3`으로 초기화될 것이고, `/todo/2`라는 형태로 들어오면 `2`로 초기화되는 형태다. 또한 `route` 클래스 내부의 멤버들은 거의 모두 `Observable` 형태이므로 `subscribe` 함수를 호출해서 해당 값이 업데이트되도 다시 가져올 수 있다.
