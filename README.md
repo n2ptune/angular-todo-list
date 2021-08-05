@@ -228,3 +228,9 @@ export class TodoDetailComponent implements OnInit {
 `route`와 `router`는 컴포넌트에 지역적으로 선언하지 않아도 Angular에서 알아서 처리해준다. 따라서 `this.route`같은 형태로 사용해도 전혀 위화감이 없다.
 
 사용자가 `/todo/3` 이라는 경로로 들어오면 컴포넌트의 `id` 필드는 `3`으로 초기화될 것이고, `/todo/2`라는 형태로 들어오면 `2`로 초기화되는 형태다. 또한 `route` 클래스 내부의 멤버들은 거의 모두 `Observable` 형태이므로 `subscribe` 함수를 호출해서 해당 값이 업데이트되도 다시 가져올 수 있다.
+
+## Store
+
+## Service
+
+## Module
