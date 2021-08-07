@@ -234,3 +234,69 @@ export class TodoDetailComponent implements OnInit {
 ## Service
 
 ## Module
+
+## HTTP
+
+Angular에서는 서버와의 HTTP 통신을 위해 패키지를 제공한다. `@angular/common/http` 패키지에서 여러 다양한 기능을 가져다가 쓸 수 있다.
+
+### 예제
+
+먼저 사용하기 위해 전역 `app` 모듈에 `HttpClientModule`을 import 해야한다.
+
+```typescript
+import { HttpClientModule } from '@angular/common/http'
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, HttpClientModule, AppRoutingModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+공식문서에는 `imports` 키에 `BrowserModule` 다음 위치 시키라고 나와있다. 이제 이 `HttpClientModule`은 각 모듈 및 컴포넌트에서 의존성 주입이 되므로 사용할 수 있다.
+
+```typescript
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlaceholderService {
+  constructor(private http: HttpClient) {
+    console.log(this.http)
+  }
+}
+```
+
+`placeholder` 서비스에 `HttpClient`를 사용한다. 이 모듈은 내부적으로 옵저버블의 형태를 지원하므로 옵저버블의 다양하고 유용한 기능을 사용할 수 있다.
+
+```typescript
+import { Observable } from 'rxjs'
+import { HttpClient } from '@angular/common/http'
+import { Injectable } from '@angular/core'
+
+type Todo = {
+  [key: string]: any
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PlaceholderService {
+  todos: Observable<Todo> | null
+
+  constructor(private http: HttpClient) {
+    this.todos = null
+  }
+
+  getTodos(): Observable<Todo> {
+    this.todos = this.http.get('https://jsonplaceholder.typicode.com/todos/1')
+    return this.todos
+  }
+}
+```
+
+`jsonplaceholder` 서비스에서 가짜 목업 데이터를 가져와 서비스를 구성하고 `http` 모듈에 의해 반환된 옵저버블을 서비스를 사용하는 측 컴포넌트에 다시 반환한다.
